@@ -92,10 +92,8 @@ app.post("/metadata", upload.single("file"), async (req, res) => {
       metadata.dimensions = dimensions;
       metadata.createdDate = "N/A";
 
-      const {
-        data: { text },
-      } = await Tesseract.recognize(req.file?.path, "eng");
-      const imageMetadata = text ? text : "N/A";
+      const { data } = await Tesseract.recognize(req.file?.path, "eng");
+      const imageMetadata = data?.text ? data.text : "N/A";
 
       res.json({
         fileType,
